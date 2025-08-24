@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCQ Solver</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>MCQ Solver (Gemini 2.5 Pro)</h2>
+    
+    <div class="camera-section">
+      <video id="camera" autoplay playsinline muted></video>
+      <canvas id="snapshot" style="display:none;"></canvas>
+    </div>
+    
+    <div class="controls">
+      <button id="capture" disabled>Capture & Solve</button>
+      <p id="status" class="status">Initializing...</p>
+    </div>
+    
+    <div class="result-section">
+      <p><strong>Answer:</strong> <span id="answer"></span></p>
+    </div>
+  </div>
+  
+  <script src="app.js"></script>
+</body>
+</html>

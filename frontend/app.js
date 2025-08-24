@@ -5,7 +5,7 @@ const captureBtn = document.getElementById("capture");
 const statusBox = document.getElementById("status");
 
 // Backend URL - Update this with your Render URL after deployment
-const BACKEND_URL = 'https://your-app-name.onrender.com'; // Replace with your actual Render URL
+const BACKEND_URL = 'https://mcq-solver-backends.onrender.com';
 
 let stream = null;
 

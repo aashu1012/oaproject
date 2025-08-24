@@ -39,7 +39,7 @@ def index():
         <p><a href="/test-gemini">🧪 Test Gemini API</a></p>
         <hr>
         <h3>Deployment Info:</h3>
-        <p><strong>Backend URL:</strong> <code>https://your-app-name.onrender.com</code></p>
+        <p><strong>Backend URL:</strong> <code>https://mcq-solver-backends.onrender.com</code></p>
         <p><strong>Frontend:</strong> Deploy to Vercel and update the backend URL</p>
     </body>
     </html>
@@ -94,11 +94,34 @@ def analyze_image():
                 print(f"Fallback model also failed: {fallback_error}")
                 return jsonify({"error": f"Failed to load Gemini model: {fallback_error}"}), 500
 
-        # Send image + prompt
+        # Send image + prompt - Updated to extract full question and provide complete answer
         print("Sending request to Gemini...")
-        response = model.generate_content(
-            [image, "This is an MCQ question. Give me ONLY the correct option (A/B/C/D) with explanation."]
-        )
+        prompt = """
+        This is an MCQ question image. Please:
+
+        1. **Extract and display the complete question text** from the image
+        2. **Show all the options** (A, B, C, D) if they are visible
+        3. **Provide the correct answer** with explanation
+        4. **Format your response clearly** with sections
+
+        Please structure your response like this:
+        
+        **Question:**
+        [Full question text from image]
+        
+        **Options:**
+        A) [Option A]
+        B) [Option B]
+        C) [Option C]
+        D) [Option D]
+        
+        **Correct Answer:** [Letter] - [Option]
+        
+        **Explanation:**
+        [Detailed explanation of why this is correct]
+        """
+        
+        response = model.generate_content([image, prompt])
         print("Received response from Gemini")
 
         return jsonify({"answer": response.text})

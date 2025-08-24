@@ -4,10 +4,8 @@ const answerBox = document.getElementById("answer");
 const captureBtn = document.getElementById("capture");
 const statusBox = document.getElementById("status");
 
-// Backend URL - will be updated for production
-const BACKEND_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-railway-backend-url.railway.app'  // Replace with your Railway URL
-  : 'http://127.0.0.1:5000';
+// Backend URL - Update this with your Render URL after deployment
+const BACKEND_URL = 'https://your-app-name.onrender.com'; // Replace with your actual Render URL
 
 let stream = null;
 

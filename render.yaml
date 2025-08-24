@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mcq-solver-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd backend && gunicorn app:app
+    envVars:
+      - key: GEMINI_API_KEY
+        value: AIzaSyAEq7_mrLraibzJqOxkYs0IDizLPHVMKFY
+      - key: PYTHON_VERSION
+        value: 3.13.4

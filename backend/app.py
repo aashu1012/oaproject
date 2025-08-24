@@ -25,13 +25,22 @@ def index():
     <html>
     <head>
         <title>MCQ Solver Backend</title>
+        <style>
+            body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+            .success { color: green; }
+            .info { color: blue; }
+        </style>
     </head>
     <body>
-        <h1>MCQ Solver Backend is Running!</h1>
-        <p>Backend server is working correctly.</p>
-        <p>Open the frontend/index.html file in your browser to use the application.</p>
-        <p><a href="/health">Health Check</a></p>
-        <p><a href="/test-gemini">Test Gemini API</a></p>
+        <h1>🎯 MCQ Solver Backend is Running!</h1>
+        <p class="success">✅ Backend server is working correctly on Render!</p>
+        <p class="info">🌐 Your frontend should connect to this backend URL.</p>
+        <p><a href="/health">🔍 Health Check</a></p>
+        <p><a href="/test-gemini">🧪 Test Gemini API</a></p>
+        <hr>
+        <h3>Deployment Info:</h3>
+        <p><strong>Backend URL:</strong> <code>https://your-app-name.onrender.com</code></p>
+        <p><strong>Frontend:</strong> Deploy to Vercel and update the backend URL</p>
     </body>
     </html>
     '''
@@ -102,14 +111,16 @@ def analyze_image():
 def health_check():
     return jsonify({
         "status": "healthy", 
-        "message": "Backend server is running",
-        "gemini_configured": bool(GEMINI_API_KEY)
+        "message": "Backend server is running on Render",
+        "gemini_configured": bool(GEMINI_API_KEY),
+        "deployment": "render"
     })
 
-# For Vercel deployment
+# For production deployment
 if __name__ == "__main__":
-    print("Starting MCQ Solver Backend Server...")
-    print("Server will be available at: http://127.0.0.1:5000")
+    port = int(os.environ.get("PORT", 5000))
+    print(f"Starting MCQ Solver Backend Server on port {port}...")
+    print(f"Server will be available at: http://127.0.0.1:{port}")
     print("Frontend should be opened from: frontend/index.html")
     print(f"Gemini API Key: {GEMINI_API_KEY[:10]}...")
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=port)

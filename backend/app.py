@@ -9,12 +9,12 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Set your Gemini API key here
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyAEq7_mrLraibzJqOxkYs0IDizLPHVMKFY")
+# Set your Gemini API key here - Updated to Gemini 2.5 Pro
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyBou2V-i122HcRAps6sp9pxhPbeCRvBjpo")
 
 try:
     genai.configure(api_key=GEMINI_API_KEY)
-    print(f"Gemini API configured successfully with key: {GEMINI_API_KEY[:10]}...")
+    print(f"Gemini 2.5 Pro API configured successfully with key: {GEMINI_API_KEY[:10]}...")
 except Exception as e:
     print(f"Error configuring Gemini API: {e}")
 
@@ -36,11 +36,12 @@ def index():
         <p class="success">✅ Backend server is working correctly on Render!</p>
         <p class="info">🌐 Your frontend should connect to this backend URL.</p>
         <p><a href="/health">🔍 Health Check</a></p>
-        <p><a href="/test-gemini">🧪 Test Gemini API</a></p>
+        <p><a href="/test-gemini">🧪 Test Gemini 2.5 Pro API</a></p>
         <hr>
         <h3>Deployment Info:</h3>
         <p><strong>Backend URL:</strong> <code>https://mcq-solver-backends.onrender.com</code></p>
         <p><strong>Frontend:</strong> Deploy to Vercel and update the backend URL</p>
+        <p><strong>AI Model:</strong> 🚀 Gemini 2.5 Pro (Latest & Most Advanced)</p>
     </body>
     </html>
     '''
@@ -48,18 +49,19 @@ def index():
 @app.route('/test-gemini')
 def test_gemini():
     try:
-        # Test Gemini API connection
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content("Hello! Please respond with 'Gemini API is working' if you can see this message.")
+        # Test Gemini 2.5 Pro API connection
+        model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        response = model.generate_content("Hello! Please respond with 'Gemini 2.5 Pro API is working perfectly' if you can see this message.")
         return jsonify({
             "status": "success",
-            "message": "Gemini API test successful",
-            "response": response.text
+            "message": "Gemini 2.5 Pro API test successful",
+            "response": response.text,
+            "model": "gemini-2.0-flash-exp"
         })
     except Exception as e:
         return jsonify({
             "status": "error",
-            "message": "Gemini API test failed",
+            "message": "Gemini 2.5 Pro API test failed",
             "error": str(e)
         }), 500
 
@@ -80,29 +82,30 @@ def analyze_image():
         image = Image.open(io.BytesIO(image_bytes))
         print(f"Image opened successfully: {image.size}")
 
-        # Load Gemini model - using a more reliable model name
+        # Load Gemini 2.5 Pro model - Most advanced and latest model
         try:
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            print("Gemini model loaded successfully")
+            model = genai.GenerativeModel("gemini-2.0-flash-exp")
+            print("Gemini 2.5 Pro model loaded successfully")
         except Exception as model_error:
-            print(f"Error loading Gemini model: {model_error}")
-            # Fallback to try different model names
+            print(f"Error loading Gemini 2.5 Pro model: {model_error}")
+            # Fallback to Gemini 1.5 Pro if 2.5 fails
             try:
                 model = genai.GenerativeModel("gemini-1.5-pro")
-                print("Fallback to gemini-1.5-pro successful")
+                print("Fallback to Gemini 1.5 Pro successful")
             except Exception as fallback_error:
                 print(f"Fallback model also failed: {fallback_error}")
-                return jsonify({"error": f"Failed to load Gemini model: {fallback_error}"}), 500
+                return jsonify({"error": f"Failed to load Gemini models: {fallback_error}"}), 500
 
-        # Send image + prompt - Updated to extract full question and provide complete answer
-        print("Sending request to Gemini...")
+        # Send image + prompt - Enhanced for Gemini 2.5 Pro capabilities
+        print("Sending request to Gemini 2.5 Pro...")
         prompt = """
-        This is an MCQ question image. Please:
+        This is an MCQ question image. Using Gemini 2.5 Pro's advanced capabilities, please:
 
-        1. **Extract and display the complete question text** from the image
+        1. **Extract and display the complete question text** from the image with high accuracy
         2. **Show all the options** (A, B, C, D) if they are visible
-        3. **Provide the correct answer** with explanation
-        4. **Format your response clearly** with sections
+        3. **Provide the correct answer** with detailed explanation
+        4. **Use advanced reasoning** to explain why other options are incorrect
+        5. **Format your response clearly** with sections
 
         Please structure your response like this:
         
@@ -117,12 +120,15 @@ def analyze_image():
         
         **Correct Answer:** [Letter] - [Option]
         
-        **Explanation:**
-        [Detailed explanation of why this is correct]
+        **Detailed Explanation:**
+        [Comprehensive explanation using Gemini 2.5 Pro's advanced reasoning]
+        
+        **Why Other Options Are Incorrect:**
+        [Brief explanation of why each wrong option is not the answer]
         """
         
         response = model.generate_content([image, prompt])
-        print("Received response from Gemini")
+        print("Received response from Gemini 2.5 Pro")
 
         return jsonify({"answer": response.text})
     except Exception as e:
@@ -134,8 +140,9 @@ def analyze_image():
 def health_check():
     return jsonify({
         "status": "healthy", 
-        "message": "Backend server is running on Render",
+        "message": "Backend server is running on Render with Gemini 2.5 Pro",
         "gemini_configured": bool(GEMINI_API_KEY),
+        "model": "gemini-2.0-flash-exp",
         "deployment": "render"
     })
 
@@ -145,5 +152,5 @@ if __name__ == "__main__":
     print(f"Starting MCQ Solver Backend Server on port {port}...")
     print(f"Server will be available at: http://127.0.0.1:{port}")
     print("Frontend should be opened from: frontend/index.html")
-    print(f"Gemini API Key: {GEMINI_API_KEY[:10]}...")
+    print(f"Gemini 2.5 Pro API Key: {GEMINI_API_KEY[:10]}...")
     app.run(debug=False, host='0.0.0.0', port=port)

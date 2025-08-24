@@ -80,3 +80,25 @@ h2 {
   color: #28a745;
   font-weight: bold;
 }
+
+.search-again-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+  display: none;
+}
+
+.search-again-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.search-again-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
